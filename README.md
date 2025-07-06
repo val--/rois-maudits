@@ -1,4 +1,5 @@
-🏰 The Accursed Kings / Les Rois Maudits – Interactive Family Tree
+# 🏰 The Accursed Kings / Les Rois Maudits – Interactive Family Tree
+
 This project is an interactive genealogical tree of the Capetian dynasty, inspired by The Accursed Kings (Les Rois Maudits) historical novels.
 
 Built with HTML, CSS, and D3.js, it allows users to explore the lineage of French kings with:
