@@ -50,9 +50,9 @@
         .attr("transform", d => `translate(${d.x},${d.y})`);
 
       node.append("foreignObject")
-        .attr("x", d => d.data.spouse ? -170 : -80)
+        .attr("x", d => d.data.spouse ? -280 : -140)
         .attr("y", -60)
-        .attr("width", 160)
+        .attr("width", 260)
         .attr("height", 140)
         .append("xhtml:div")
         .attr("class", "node-card")
@@ -65,9 +65,9 @@
 
       // Carte de l'époux(se) si présent
       node.filter(d => d.data.spouse).append("foreignObject")
-        .attr("x", 10)
+        .attr("x", 20)
         .attr("y", -60)
-        .attr("width", 160)
+        .attr("width", 260)
         .attr("height", 140)
         .append("xhtml:div")
         .attr("class", "node-card spouse")
@@ -77,6 +77,18 @@
           <p>${d.data.spouse?.title || ''}</p>
           <p>${d.data.spouse?.birth || '?'} – ${d.data.spouse?.death || '?'}</p>
         `);
+
+      // Draw horizontal lines between spouses
+      g.selectAll(".spouse-link")
+        .data(root.descendants().filter(d => d.data.spouse))
+        .join("line")
+        .attr("class", "spouse-link")
+        .attr("x1", d => d.x -20) // end of main card
+        .attr("y1", d => d.y - 60 + 70)  // vertical center of card
+        .attr("x2", d => d.x + 20)       // start of spouse card
+        .attr("y2", d => d.y - 60 + 70)
+        .attr("stroke", "#8b5e3c")
+        .attr("stroke-width", 2);
     });
   </script>
 </body>
