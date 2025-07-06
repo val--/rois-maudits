@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Arbre généalogique stylisé – Rois Maudits</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <h2>Arbre généalogique des Rois Maudits</h2>
+  <div id="tree-container" style="width: 100vw; height: 90vh; overflow: auto;">
+    <svg width="2000" height="1200"></svg>
+  </div>
+
+  <script>
+    const svg = d3.select("svg"),
+          width = +svg.attr("width"),
+          height = +svg.attr("height");
+
+    const g = svg.append("g").attr("transform", "translate(40,40)");
+
+    // Add zoom behavior
+    svg.call(
+      d3.zoom()
+        .scaleExtent([0.2, 2]) // min/max zoom
+        .on("zoom", (event) => {
+          g.attr("transform", event.transform);
+        })
+    );
+
+    const tree = d3.tree().size([width - 80, height - 100]);
+
+    d3.json("data.json").then(data => {
+      const root = d3.hierarchy(data);
+      tree(root);
+
+      g.selectAll(".link")
+        .data(root.links())
+        .join("path")
+        .attr("class", "link")
+        .attr("d", d3.linkVertical()
+          .x(d => d.x)
+          .y(d => d.y)
+        );
+
+      const node = g.selectAll(".node")
+        .data(root.descendants())
+        .join("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+
+      node.append("foreignObject")
+        .attr("x", d => d.data.spouse ? -170 : -80)
+        .attr("y", -60)
+        .attr("width", 160)
+        .attr("height", 140)
+        .append("xhtml:div")
+        .attr("class", "node-card")
+        .html(d => `
+          <img src="${d.data.image || 'images/blason_placeholder.svg'}" alt="blason">
+          <h3>${d.data.name}</h3>
+          <p>${d.data.title || ''}</p>
+          <p>${d.data.birth || '?'} – ${d.data.death || '?'}</p>
+        `);
+
+      // Carte de l'époux(se) si présent
+      node.filter(d => d.data.spouse).append("foreignObject")
+        .attr("x", 10)
+        .attr("y", -60)
+        .attr("width", 160)
+        .attr("height", 140)
+        .append("xhtml:div")
+        .attr("class", "node-card spouse")
+        .html(d => `
+          <img src="${d.data.spouse?.image || 'images/blason_placeholder.svg'}" alt="blason">
+          <h3>${d.data.spouse?.name}</h3>
+          <p>${d.data.spouse?.title || ''}</p>
+          <p>${d.data.spouse?.birth || '?'} – ${d.data.spouse?.death || '?'}</p>
+        `);
+    });
+  </script>
+</body>
+</html>

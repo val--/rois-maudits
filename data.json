@@ -1,0 +1,90 @@
+{
+  "name": "Louis IX (Saint Louis)",
+  "title": "Roi de France",
+  "birth": "1214",
+  "death": "1270",
+  "image": "images/blason_placeholder.svg",
+  "spouse": {
+    "name": "Marguerite de Provence",
+    "title": "Reine de France",
+    "birth": "1221",
+    "death": "1295",
+    "image": "images/blason_placeholder.svg"
+  },
+  "children": [
+    {
+      "name": "Philippe III le Hardi",
+      "title": "Roi de France",
+      "birth": "1245",
+      "death": "1285",
+      "image": "images/blason_placeholder.svg",
+      "spouse": {
+        "name": "Isabelle d'Aragon",
+        "title": "Reine de France",
+        "birth": "1247",
+        "death": "1271",
+        "image": "images/blason_placeholder.svg"
+      },
+      "children": [
+        {
+          "name": "Philippe IV le Bel",
+          "title": "Roi de France",
+          "birth": "1268",
+          "death": "1314",
+          "image": "images/blason_placeholder.svg",
+          "spouse": {
+            "name": "Jeanne Ire de Navarre",
+            "title": "Reine de Navarre et de France",
+            "birth": "1273",
+            "death": "1305",
+            "image": "images/blason_placeholder.svg"
+          },
+          "children": [
+            {
+              "name": "Louis X le Hutin",
+              "title": "Roi de France et de Navarre",
+              "birth": "1289",
+              "death": "1316",
+              "image": "images/blason_placeholder.svg",
+              "spouse": {
+                "name": "Marguerite de Bourgogne",
+                "title": "Reine de France et de Navarre",
+                "birth": "1290",
+                "death": "1315",
+                "image": "images/blason_placeholder.svg"
+              }
+            },
+            {
+              "name": "Philippe V le Long",
+              "title": "Roi de France et de Navarre",
+              "birth": "1293",
+              "death": "1322",
+              "image": "images/blason_placeholder.svg",
+              "spouse": {
+                "name": "Jeanne II de Bourgogne",
+                "title": "Reine de France et de Navarre",
+                "birth": "1292",
+                "death": "1330",
+                "image": "images/blason_placeholder.svg"
+              }
+            },
+            {
+              "name": "Charles IV le Bel",
+              "title": "Roi de France et de Navarre",
+              "birth": "1294",
+              "death": "1328",
+              "image": "images/blason_placeholder.svg",
+              "spouse": {
+                "name": "Jeanne d'Évreux",
+                "title": "Reine de France et de Navarre",
+                "birth": "1310",
+                "death": "1371",
+                "image": "images/blason_placeholder.svg"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
