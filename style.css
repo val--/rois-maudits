@@ -47,3 +47,41 @@ h2 {
   font-size: 12px;
   color: #5e4733;
 }
+
+.node-card-duo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spouse-divider {
+  width: 2px;
+  height: 80px;
+  background: #8b5e3c;
+  opacity: 0.4;
+  margin: 0 8px;
+}
+.node-person {
+  flex: 1;
+}
+.crown {
+  margin-left: 4px;
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+
+.node-card,
+.node-card-duo {
+  min-width: 180px;
+  max-width: 340px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.node-card-duo {
+  max-width: 700px;
+}
+
+.node-card h3, .node-card p {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
