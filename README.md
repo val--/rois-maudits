@@ -11,3 +11,8 @@ Built with HTML, CSS, and D3.js, it allows users to explore the lineage of Frenc
 Data is structured in JSON and rendered dynamically as a vertical tree.
 
 In order to launch the project locally, you can use a simple server like `python3 -m http.server 8080`
+
+
+## Early WIP Preview:
+
+![Preview of the interactive family tree](images/preview.png)

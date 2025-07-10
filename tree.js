@@ -16,7 +16,7 @@ function toCoupleTree(person) {
 // --- Variable-width tree layout constants ---
 const SINGLE_WIDTH = 340; // match CSS max-width
 const COUPLE_WIDTH = 700; // match CSS max-width for duo
-const NODE_HEIGHT = 140;
+const NODE_HEIGHT = 152;
 const LEVEL_VSPACE = 120;
 const SIBLING_HSPACE = 40;
 
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     node.append("foreignObject")
       .attr("x", d => d.spouse ? -COUPLE_WIDTH/2 : -SINGLE_WIDTH/2)
-      .attr("y", 5)
+      .attr("y", 0)
       .attr("width", d => d.spouse ? COUPLE_WIDTH : SINGLE_WIDTH)
       .attr("height", NODE_HEIGHT)
       .append("xhtml:div")

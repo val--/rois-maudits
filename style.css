@@ -1,9 +1,19 @@
 body {
-  font-family: "Georgia", serif;
-  background: #f9f2e8;
-  margin: 0;
-  padding: 20px;
   text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: 'EB Garamond', serif;
+  color: #3b2f1e; /* brun foncé lisible */
+  position: relative;
+  background-image: url('images/background-parchemin.jpg');
+}
+
+main {
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(85, 60, 20, 0.3);
 }
 
 h2 {
@@ -37,7 +47,7 @@ h2 {
 }
 
 .node-card h3 {
-  font-size: 14px;
+  font-size: 20px;
   margin: 5px 0;
   color: #2e1a0f;
 }
@@ -68,7 +78,6 @@ h2 {
   font-size: 1.1em;
   vertical-align: middle;
 }
-
 .node-card,
 .node-card-duo {
   min-width: 180px;
@@ -85,3 +94,17 @@ h2 {
   word-break: break-word;
   overflow-wrap: anywhere;
 }
+
+#tree-title-img {
+  display: block;
+  max-width: 250px;
+  width: 45vw;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 120px;
+  transform: translateX(-50%);
+  margin: 0;
+  z-index: 100;
+}
+
