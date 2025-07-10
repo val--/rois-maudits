@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Arbre généalogique stylisé – Rois Maudits</title>
+  <title>Arbre généalogique des Rois Maudits</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-  <h2>Arbre généalogique des Rois Maudits</h2>
-  <div id="tree-container" style="width: 100vw; height: 90vh; overflow: auto;">
+  <div id="tree-container">
+    <h2>Arbre généalogique des Rois Maudits</h2>
     <svg width="2000" height="1200"></svg>
   </div>
 
@@ -40,7 +40,7 @@
         .attr("class", "link")
         .attr("d", d3.linkVertical()
           .x(d => d.x)
-          .y(d => d.y)
+          .y(d => d.y + 10)
         );
 
       const node = g.selectAll(".node")
