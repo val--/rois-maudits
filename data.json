@@ -4,12 +4,14 @@
   "birth": "1214",
   "death": "1270",
   "image": "images/blason_placeholder.svg",
+  "isKing": true,
   "spouse": {
     "name": "Marguerite de Provence",
     "title": "Reine de France",
     "birth": "1221",
     "death": "1295",
-    "image": "images/blason_placeholder.svg"
+    "image": "images/blason_placeholder.svg",
+    "isKing": false
   },
   "children": [
     {
@@ -18,12 +20,14 @@
       "birth": "1245",
       "death": "1285",
       "image": "images/blason_placeholder.svg",
+      "isKing": true,
       "spouse": {
         "name": "Isabelle d'Aragon",
         "title": "Reine de France",
         "birth": "1247",
         "death": "1271",
-        "image": "images/blason_placeholder.svg"
+        "image": "images/blason_placeholder.svg",
+        "isKing": false
       },
       "children": [
         {
@@ -32,12 +36,14 @@
           "birth": "1268",
           "death": "1314",
           "image": "images/blason_placeholder.svg",
+          "isKing": true,
           "spouse": {
             "name": "Jeanne Ire de Navarre",
             "title": "Reine de Navarre et de France",
             "birth": "1273",
             "death": "1305",
-            "image": "images/blason_placeholder.svg"
+            "image": "images/blason_placeholder.svg",
+            "isKing": true
           },
           "children": [
             {
@@ -46,13 +52,25 @@
               "birth": "1289",
               "death": "1316",
               "image": "images/blason_placeholder.svg",
+              "isKing": true,
               "spouse": {
                 "name": "Marguerite de Bourgogne",
                 "title": "Reine de France et de Navarre",
                 "birth": "1290",
                 "death": "1315",
-                "image": "images/blason_placeholder.svg"
-              }
+                "image": "images/blason_placeholder.svg",
+                "isKing": false
+              },
+              "children": [
+                {
+                  "name": "Jeanne II de Navarre",
+                  "title": "Reine de Navarre",
+                  "birth": "1312",
+                  "death": "1349",
+                  "image": "images/blason_placeholder.svg",
+                  "isKing": true
+                }
+              ]
             },
             {
               "name": "Philippe V le Long",
@@ -60,13 +78,33 @@
               "birth": "1293",
               "death": "1322",
               "image": "images/blason_placeholder.svg",
+              "isKing": true,
               "spouse": {
                 "name": "Jeanne II de Bourgogne",
                 "title": "Reine de France et de Navarre",
                 "birth": "1292",
                 "death": "1330",
-                "image": "images/blason_placeholder.svg"
-              }
+                "image": "images/blason_placeholder.svg",
+                "isKing": false
+              },
+              "children": [
+                {
+                  "name": "Jeanne III de Bourgogne",
+                  "title": "Comtesse de Bourgogne et d'Artois",
+                  "birth": "1308",
+                  "death": "1349",
+                  "image": "images/blason_placeholder.svg",
+                  "isKing": false
+                },
+                {
+                  "name": "Marguerite Ire de Bourgogne",
+                  "title": "Comtesse de Flandre",
+                  "birth": "1310",
+                  "death": "1382",
+                  "image": "images/blason_placeholder.svg",
+                  "isKing": false
+                }
+              ]
             },
             {
               "name": "Charles IV le Bel",
@@ -74,13 +112,57 @@
               "birth": "1294",
               "death": "1328",
               "image": "images/blason_placeholder.svg",
+              "isKing": true,
               "spouse": {
                 "name": "Jeanne d'Évreux",
                 "title": "Reine de France et de Navarre",
                 "birth": "1310",
                 "death": "1371",
-                "image": "images/blason_placeholder.svg"
-              }
+                "image": "images/blason_placeholder.svg",
+                "isKing": false
+              },
+              "children": [
+                {
+                  "name": "Jeanne de France",
+                  "title": "Reine consort de Navarre",
+                  "birth": "1326",
+                  "death": "1360",
+                  "image": "images/blason_placeholder.svg",
+                  "isKing": false
+                },
+                {
+                  "name": "Marie de France",
+                  "birth": "1327",
+                  "death": "1341",
+                  "image": "images/blason_placeholder.svg",
+                  "isKing": false
+                },
+                {
+                  "name": "Blanche de France",
+                  "birth": "1328",
+                  "death": "1392",
+                  "image": "images/blason_placeholder.svg",
+                  "isKing": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Charles de Valois",
+          "title": "Comte de Valois",
+          "birth": "1270",
+          "death": "1325",
+          "image": "images/blason_placeholder.svg",
+          "isKing": false,
+          "children": [
+            {
+              "name": "Philippe VI de Valois",
+              "title": "Roi de France",
+              "birth": "1293",
+              "death": "1350",
+              "image": "images/blason_placeholder.svg",
+              "isKing": true
             }
           ]
         }

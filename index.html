@@ -28,67 +28,132 @@
         })
     );
 
-    const tree = d3.tree().size([width - 80, height - 100]);
+    // --- COUPLE-CENTRIC DATA TRANSFORMATION ---
+    function toCoupleTree(person) {
+      const couple = {
+        main: person,
+        spouse: person.spouse || null,
+        children: []
+      };
+      if (person.children && person.children.length > 0) {
+        couple.children = person.children.map(child => toCoupleTree(child));
+      }
+      return couple;
+    }
+
+    // --- VARIABLE-WIDTH TREE LAYOUT ---
+    // Node width constants
+    const SINGLE_WIDTH = 260;
+    const COUPLE_WIDTH = 540; // 2*260 + 20px gap
+    const NODE_HEIGHT = 140;
+    const LEVEL_VSPACE = 120;
+    const SIBLING_HSPACE = 40;
+
+    // Recursively compute widths and x-positions
+    function computeLayout(node, depth = 0) {
+      node.width = node.spouse ? COUPLE_WIDTH : SINGLE_WIDTH;
+      node.depth = depth;
+      if (!node.children || node.children.length === 0) {
+        node.x = 0;
+        return node.width;
+      }
+      // Compute children widths and positions
+      let totalWidth = 0;
+      node.children.forEach((child, i) => {
+        const childWidth = computeLayout(child, depth + 1);
+        child._subtreeWidth = childWidth;
+        totalWidth += childWidth;
+        if (i > 0) totalWidth += SIBLING_HSPACE;
+      });
+      // Center children under this node
+      let x = -totalWidth / 2;
+      node.children.forEach(child => {
+        child.x = x + child._subtreeWidth / 2;
+        x += child._subtreeWidth + SIBLING_HSPACE;
+      });
+      node.x = 0;
+      return Math.max(node.width, totalWidth);
+    }
+
+    // Traverse and collect nodes with absolute positions
+    function collectNodes(node, parentAbsX = 0, nodes = [], links = []) {
+      const absX = parentAbsX + node.x;
+      nodes.push({ ...node, absX, absY: node.depth * (NODE_HEIGHT + LEVEL_VSPACE) });
+      if (node.children) {
+        node.children.forEach(child => {
+          links.push({
+            source: { x: absX, y: node.depth * (NODE_HEIGHT + LEVEL_VSPACE) + NODE_HEIGHT },
+            target: { x: absX + child.x, y: (node.depth + 1) * (NODE_HEIGHT + LEVEL_VSPACE) }
+          });
+          collectNodes(child, absX, nodes, links);
+        });
+      }
+      return { nodes, links };
+    }
 
     d3.json("data.json").then(data => {
-      const root = d3.hierarchy(data);
-      tree(root);
+      // Transform data to couple-centric tree
+      const coupleRoot = toCoupleTree(data);
+      computeLayout(coupleRoot);
+      const { nodes, links } = collectNodes(coupleRoot);
 
+      // Center the tree in the SVG
+      const minX = d3.min(nodes, d => d.absX - d.width / 2);
+      const maxX = d3.max(nodes, d => d.absX + d.width / 2);
+      const treeWidth = maxX - minX;
+      const offsetX = width / 2 - (minX + treeWidth / 2);
+
+      // Draw links
       g.selectAll(".link")
-        .data(root.links())
+        .data(links)
         .join("path")
         .attr("class", "link")
-        .attr("d", d3.linkVertical()
-          .x(d => d.x)
-          .y(d => d.y + 10)
-        );
+        .attr("d", d => `M${d.source.x + offsetX},${d.source.y} V${d.target.y - 20} H${d.target.x + offsetX} V${d.target.y}`);
 
+      // Draw nodes
       const node = g.selectAll(".node")
-        .data(root.descendants())
+        .data(nodes)
         .join("g")
         .attr("class", "node")
-        .attr("transform", d => `translate(${d.x},${d.y})`);
+        .attr("transform", d => `translate(${d.absX + offsetX},${d.absY})`);
 
       node.append("foreignObject")
-        .attr("x", d => d.data.spouse ? -280 : -140)
-        .attr("y", -60)
-        .attr("width", 260)
-        .attr("height", 140)
+        .attr("x", d => d.spouse ? -COUPLE_WIDTH/2 : -SINGLE_WIDTH/2)
+        .attr("y", 5)
+        .attr("width", d => d.spouse ? COUPLE_WIDTH : SINGLE_WIDTH)
+        .attr("height", NODE_HEIGHT)
         .append("xhtml:div")
-        .attr("class", "node-card")
-        .html(d => `
-          <img src="${d.data.image || 'images/blason_placeholder.svg'}" alt="blason">
-          <h3>${d.data.name}</h3>
-          <p>${d.data.title || ''}</p>
-          <p>${d.data.birth || '?'} – ${d.data.death || '?'}</p>
-        `);
-
-      // Carte de l'époux(se) si présent
-      node.filter(d => d.data.spouse).append("foreignObject")
-        .attr("x", 20)
-        .attr("y", -60)
-        .attr("width", 260)
-        .attr("height", 140)
-        .append("xhtml:div")
-        .attr("class", "node-card spouse")
-        .html(d => `
-          <img src="${d.data.spouse?.image || 'images/blason_placeholder.svg'}" alt="blason">
-          <h3>${d.data.spouse?.name}</h3>
-          <p>${d.data.spouse?.title || ''}</p>
-          <p>${d.data.spouse?.birth || '?'} – ${d.data.spouse?.death || '?'}</p>
-        `);
-
-      // Draw horizontal lines between spouses
-      g.selectAll(".spouse-link")
-        .data(root.descendants().filter(d => d.data.spouse))
-        .join("line")
-        .attr("class", "spouse-link")
-        .attr("x1", d => d.x -20) // end of main card
-        .attr("y1", d => d.y - 60 + 70)  // vertical center of card
-        .attr("x2", d => d.x + 20)       // start of spouse card
-        .attr("y2", d => d.y - 60 + 70)
-        .attr("stroke", "#8b5e3c")
-        .attr("stroke-width", 2);
+        .attr("class", d => d.spouse ? "node-card node-card-duo" : "node-card")
+        .html(d => {
+          // Helper to render name with crown if isKing
+          function nameWithCrown(person) {
+            return `${person.name} ${person.isKing ? '👑' : ''}`;
+          }
+          if (d.spouse) {
+            return `<div style='display:flex;justify-content:center;align-items:center;'>
+              <div style='flex:1;'>
+                <img src="${d.main.image || 'images/blason_placeholder.svg'}" alt="blason">
+                <h3>${nameWithCrown(d.main)}</h3>
+                <p>${d.main.title || ''}</p>
+                <p>${d.main.birth || '?'} – ${d.main.death || '?'}</p>
+              </div>
+              <div class='spouse-divider' style='width:2px;height:80px;background:#8b5e3c;opacity:0.4;margin:0 8px;'></div>
+              <div style='flex:1;'>
+                <img src="${d.spouse.image || 'images/blason_placeholder.svg'}" alt="blason">
+                <h3>${nameWithCrown(d.spouse)}</h3>
+                <p>${d.spouse.title || ''}</p>
+                <p>${d.spouse.birth || '?'} – ${d.spouse.death || '?'}</p>
+              </div>
+            </div>`;
+          } else {
+            return `
+              <img src="${d.main.image || 'images/blason_placeholder.svg'}" alt="blason">
+              <h3>${nameWithCrown(d.main)}</h3>
+              <p>${d.main.title || ''}</p>
+              <p>${d.main.birth || '?'} – ${d.main.death || '?'}</p>
+            `;
+          }
+        });
     });
   </script>
 </body>
